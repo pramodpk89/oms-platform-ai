@@ -12,7 +12,9 @@ function Normalize([string]$Text) {
     # Small lexical normalizer, not an LLM call. Exact live-data IDs are never modified.
     $words = @([regex]::Matches($Text.ToLowerInvariant(), '[a-z0-9]+') | ForEach-Object {
         $w = $_.Value
-        if ($w.Length -gt 3 -and $w.EndsWith('s') -and !$w.EndsWith('ss') -and !$w.EndsWith('us')) { $w = $w.Substring(0,$w.Length-1) }
+        if ($w -eq 'statuses') { $w = 'status' }
+        elseif ($w.Length -gt 4 -and $w.EndsWith('ies')) { $w = $w.Substring(0,$w.Length-3) + 'y' }
+        elseif ($w.Length -gt 3 -and $w.EndsWith('s') -and !$w.EndsWith('ss') -and !$w.EndsWith('us')) { $w = $w.Substring(0,$w.Length-1) }
         $w
     })
     return ' ' + ($words -join ' ') + ' '
