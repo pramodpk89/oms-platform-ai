@@ -19,7 +19,7 @@ try {
         Assert ($errors.Count -eq 0) "Parse $($file.Name)"
     }
     & "$repo/scripts/build-db2.ps1"
-    & javac --release 8 -cp "$repo/tools/db2-client/oms-db2.jar" -d $temp "$PSScriptRoot/OmsDb2Test.java" "$PSScriptRoot/MockServer.java" "$PSScriptRoot/DB2Driver.java"
+    & javac --release 8 -encoding UTF-8 -cp "$repo/tools/db2-client/oms-db2.jar" -d $temp "$PSScriptRoot/OmsDb2Test.java" "$PSScriptRoot/MockServer.java" "$PSScriptRoot/DB2Driver.java"
     Assert ($LASTEXITCODE -eq 0) 'Compile fixtures'
     & java -cp ("$repo/tools/db2-client/oms-db2.jar" + [IO.Path]::PathSeparator + $temp) OmsDb2Test
     Assert ($LASTEXITCODE -eq 0) 'JDBC and SQL tests'
@@ -50,7 +50,7 @@ try {
     $queryPath = Join-Path $temp 'query.sql'
     'SELECT * FROM {{schema}}.T WHERE ID = ?' | Set-Content $queryPath
     $paramPath = Join-Path $temp 'params.json'
-    '[{"type":"string","value":"Unicode Ω and quote ''"}]' | Set-Content $paramPath -Encoding UTF8
+    ('[{"type":"string","value":"Unicode ' + [char]0x03a9 + ' and quote ''"}]') | Set-Content $paramPath -Encoding UTF8
     Expect-Failure { & "$repo/scripts/invoke-db2.ps1" -ConfigDir $temp -SqlFile $queryPath -ParametersFile $paramPath } 'Wrapper blocks unverified query'
     $cfg.environments.local.db2.readOnlyAccountVerified = $true; Save-Json $cfg $cfgPath
     $r = & "$repo/scripts/invoke-db2.ps1" -ConfigDir $temp -SqlFile $queryPath -ParametersFile $paramPath -Limit 2 | ConvertFrom-Json

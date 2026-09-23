@@ -36,12 +36,15 @@ $process.StartInfo = $start
 try {
     $null = $process.Start()
     $stdout = $process.StandardOutput.ReadToEndAsync(); $stderr = $process.StandardError.ReadToEndAsync()
-    $process.StandardInput.WriteLine(($lines -join "`n")); $process.StandardInput.Close()
+    # Send exact UTF-8 bytes: Windows PowerShell/.NET may otherwise emit a BOM.
+    $wire = [Text.Encoding]::UTF8.GetBytes(($lines -join "`n") + "`n")
+    $process.StandardInput.BaseStream.Write($wire, 0, $wire.Length)
+    $process.StandardInput.BaseStream.Flush(); $process.StandardInput.BaseStream.Close()
     if (!$process.WaitForExit(($TimeoutSeconds + 15) * 1000)) { $process.Kill(); throw 'DB2 helper timed out; no automatic retry.' }
     $result = $stdout.GetAwaiter().GetResult()
     if (!$result) { throw 'DB2 helper failed to start. Verify Java 8+ and driver paths.' }
     $parsed = $result | ConvertFrom-Json
     $parsed | Add-Member -NotePropertyName environment -NotePropertyValue $c.Name
     Write-JsonResult $parsed
-    if ($process.ExitCode -ne 0) { throw 'DB2 helper returned an error; see the compact result above.' }
+    if ($process.ExitCode -ne 0) { throw ('DB2 helper: ' + $parsed.error) }
 } finally { $process.Dispose(); $lines = $null; $inputValues = $null }
