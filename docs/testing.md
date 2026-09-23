@@ -4,11 +4,15 @@ Run `./tests/run.ps1` with a maintainer JDK 9+ and PowerShell. The suite uses te
 
 Coverage includes SQL guardrails, JDBC parameter binding and rollback, bounded results, environment isolation, setup idempotency, REST authentication/redaction, confirmation gating, redirect handling, error statuses, and skill names/links/size budgets. The GitHub workflow targets macOS PowerShell 7 plus Windows PowerShell 7 and 5.1; a configured workflow is not evidence it has run.
 
+ERD regression tests (`./tests/erd.ps1`, also included in the full suite) generate synthetic ZIPs. They cover extraction, primary/unique keys, logical relationships versus mentions, monthly deltas, idempotency, immutable snapshots, failed-import preservation, bounded lookup, environment version selection, and preservation of custom references.
+
 Build with `./scripts/build-db2.ps1`. Runtime helper JAR is included. Changes to Java source must rebuild that JAR and rerun tests before sharing.
 
 For live checks see [acceptance](acceptance.md). API names, schemas and UI controls are installation-specific and must be observed or supplied. Keep raw responses and actual credentials in `.local/`, not fixtures.
 
 ## Local verification — 2026-09-23
+
+ERD refresh addition: 37 synthetic ERD checks, 31 Java assertions, and 81 PowerShell checks passed locally. The supplied ZIP imported 904 entity definitions with 16,861 columns; the `YFS_ORDER_HEADER` primary key and `OPPORTUNITY_KEY` logical relationship were checked against the source. The source's exact fix-pack identifier is unknown. Hosted Windows verification for this addition is tracked by its PR checks.
 
 - Mac, PowerShell 7.4.13, Java 21: 31 Java assertions and 71 PowerShell checks passed (102 total).
 - Java helper checks also passed under the locally installed Java 8 runtime.

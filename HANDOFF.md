@@ -2,6 +2,14 @@
 
 Updated 2026-09-23. Read this file first; inspect other files only as needed for the next request. Do not rebuild, retest, or redesign completed work without a relevant change or failure.
 
+## ERD refresh addition
+
+Monthly fix-pack ERD import is implemented in `scripts/update-erd.ps1`; lookup is `scripts/find-erd.ps1`. Both agents use the new `oms-data-model` foundation. See `docs/erd-knowledge.md`. Generated vendor metadata stays in Git-ignored `.local/erd/`, with immutable versions, a current pointer, and HTML/JSON change reports. Import your authorized ZIP in each checkout; source metadata is not bundled in the public repo.
+
+The supplied ZIP imported 904 tables and 16,861 columns. Its exact fix-pack ID is unknown; local labels beginning `supplied-2025-12-11` are provisional. An environment's optional `erdFixPack` setting selects matching documentation. No live DB connection is needed for lookup.
+
+Added 37 synthetic ERD regression checks; the full local suite passed (37 ERD, 31 Java, 81 PowerShell). The historical initial-build notes below remain background; inspect current PR/CI status for this addition.
+
 ## User's objective and working preferences
 
 Build one reusable repository of IBM Sterling OMS platform skills and agents for teammates and other agents to use and extend. Target GitHub Copilot **agent mode in VS Code**, with user-selected OpenAI or Claude models. Develop on Mac; users run Windows. Sterling OMS version 10; fix pack unknown.
