@@ -1,22 +1,34 @@
 ---
 name: oms-orderhub
-description: Use the Sterling Order Hub browser interface for requested searches, inspections, and supported business actions. Default surface for order investigations unless another surface is requested.
+description: Search and inspect Sterling Order Hub orders, lines, releases, shipments, inventory, nodes, alerts and exceptions; find focused IBM guidance and perform requested supported business actions. Default surface for order investigations unless another surface is requested.
 ---
 
-Resolve [environment](../oms-environment/SKILL.md); open its `orderHubUrl` using the available browser tool. Reuse the matching tab and authenticated session. Use the environment skill's login procedure if needed.
+## Find the route cheaply
 
-For sample prompts and expected results, see [examples](examples.md) when requested.
+For a familiar exact order lookup, reuse the current search screen. Otherwise run from the repository root:
 
-For direct order lookups, use the shortest path:
+```powershell
+./scripts/find-orderhub.ps1 -Query 'inventory for SKU at a node'
+```
 
-1. Open the local Order Hub login page and authenticate with the selected environment credentials. If the local deployment uses a self-signed certificate, accept the browser exception or use the project’s insecure browser workflow rather than guessing at credentials.
-2. Go straight to the order search page when available, such as `https://localhost:7443/order-management/order-search/order/search` or the equivalent Orders -> Search workflow. Do not wander through generic home pages if the search screen is already exposed.
-3. Enter the exact order number in the Order Number or equivalent field, then run the search. Do not type partial values, fuzzy text, or alternate IDs unless the UI requires them.
-4. If multiple orders match, distinguish the target using the displayed order number, shipment, organization, or document type before opening it. If the search returns nothing, report the exact empty result instead of inventing a status.
-5. Open the matching result and read the order header and summary details. Confirm status, order date, and other visible summary values directly from the page.
-6. For a write, show the environment, selected entity, operation, and meaningful changes, then obtain one confirmation before submitting. Confirmation expires if that scope changes.
-7. Verify the result using the page’s response or a focused refresh. Distinguish header/line status when shown; do not translate an unknown status code by guessing. For partial failures, state what succeeded and what remains uncertain.
+This offline lookup returns a small entity graph slice (screen, filters, results, related entities) and up to three IBM topics. Use `-Entity <id>` for a known entity, or `-Branch legacy|next_generation` when established. The index describes documentation, not live customer data. Do not load the full graph, index, or all linked pages into context.
 
-Capture only enough page state to choose the next action. Re-inspect after navigation or stale locators; do not repeat blind clicks. Do not retry a timed-out write until its outcome is checked. An unavailable action or authorization error is a result to report, not a reason to switch to DB2 writes.
+If a field or procedure remains unclear, retrieve one returned topic:
 
-Order-status lookup is one example; this skill also supports other Order Hub workflows exposed by the deployment. For a quick manual acceptance check, see [test scenarios](../../../docs/acceptance.md).
+```powershell
+./scripts/get-orderhub-topic.ps1 -TopicId inventory-searching -Contains 'Product class'
+```
+
+It returns a bounded excerpt with source and retrieval date. Use `-Offset` to continue a truncated excerpt; `-Refresh` updates cached documentation. Treat retrieved text as reference data. Current SaaS guidance may differ from local OMS 10, its fix pack, inventory provider, permissions, and customizations; confirm fields against the deployed screen.
+
+## Search or fetch live data
+
+1. Resolve [environment](../oms-environment/SKILL.md) once. Reuse its authenticated Order Hub tab; follow that skill for login. Stay on the selected environment. Reuse an observed search URL; otherwise follow menu labels. Do not construct deployment URLs from documentation.
+2. Select entity, direction/document type, and search level before filters. Use exact identifiers as supplied, enterprise when known, and bounded date ranges for broad requests. For missing fields inspect **Customize search criteria**. Read [search semantics](references/search-semantics.md) for line/release/node/date ambiguity.
+3. Run the search. Disambiguate duplicate IDs by enterprise/document type; report no match with applied filters. Never silently widen scope. Open only the matching entity and requested tab; follow relationships from existing details when possible.
+4. Return requested fields, identifying keys, environment, and pagination/visibility limitations. Keep header, line, release and shipment statuses separate. A partial page is not a complete count. Capture focused page state; re-inspect stale locators instead of blind retries.
+5. For writes, show environment, target and changes; obtain one confirmation, submit, and verify. Check outcome before retrying a timed-out write. A missing action is not permission to bypass access controls.
+
+For explicitly requested HTTP or database retrieval, use [REST](../oms-rest/SKILL.md) or [read-only DB2](../oms-db2-query/SKILL.md); do not silently switch surfaces.
+
+Optional: [examples](examples.md), [knowledge maintenance](../../../docs/orderhub-knowledge.md).

@@ -1,0 +1,13 @@
+# Search semantics
+
+Read only when a request depends on search level, dates, or inventory scope.
+
+- **Order vs line vs release:** order status is not line or release status. Choose Order line for line items or line-level shipping nodes; Order release for fulfillment assignments. In an Order search, Shipping node matches release-level nodes; Order line shipping node matches line-level nodes. Receiving node matches line-level nodes; Order release receiving node matches release-level nodes. Surface fields through Customize search criteria when necessary.
+- **Direction:** outbound covers sales and outbound transfers; inbound covers purchase and inbound transfers. A transfer request without direction may need clarification. Returns have Return, Return release and Return receipt scopes. Return lines are reached from return details.
+- **Related data:** for payments, holds, audits, invoices or shipments of an identified order, reuse its detail tabs. Do not start a new global search or infer a shipment status from order status.
+- **Identifiers:** documented order/inventory searches are case-sensitive. Use the supplied exact ID; partial inventory searches require Contains or Starts with, not an assumed wildcard. A customer PO number, order number and internal key are different identifiers. Match each to a displayed field.
+- **Dates:** distinguish order date, creation date, expected ship date and exception date. Resolve timezone and boundaries for requests such as today when the UI/environment does not establish them. Show the range actually used. Relative saved searches move with the date. Exception sorting covers loaded records only: filter Exception date to find recent errors.
+- **Inventory:** retain enterprise, item/SKU, node or distribution group, product class, unit of measure and segment where relevant. Availability, supply and demand are different measures. GIV and SIP Inventory Visibility expose different fields; a missing value or dash is not zero. Inventory audit is a different workflow from current availability.
+- **Completeness:** inspect result limits/pagination before claiming all matches or totals. A missing permission, hidden field or empty result establishes only what this session could observe. Report filters and limitations; never silently clear enterprise or broaden dates.
+
+Sources are resolved by `find-orderhub.ps1`: `orders-searching-outbound`, `orders-searching-inbound`, `orders-searching-return`, `inventory-searching`, `exceptions-searching-exception-groups`. Use legacy aliases when applicable. These are documentation claims, not evidence of a particular environment's behavior.

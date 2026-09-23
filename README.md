@@ -13,6 +13,8 @@ Java 8+ is needed only for DB2; Python and Node.js are not required. Windows Pow
 
 Try “Check order 10001 in local Order Hub”, “Count orders created today in local DB2”, or “Invoke this documented service through local API Tester using this XML”. These are examples, not the limits of the skills.
 
+Order Hub searches can use the bundled [knowledge graph and topic index](docs/orderhub-knowledge.md): `./scripts/find-orderhub.ps1 -Query 'inventory for SKU at a node'`. It returns focused navigation/filter guidance; one IBM passage can be fetched on demand, keeping the full documentation out of agent context.
+
 ## Extend and share
 
 The [complete API-docs ZIP](documentation/README.md) is bundled in this repository. Setup automatically reconstructs it and imports the ERD; no separate download or import is needed. Search with `./scripts/find-erd.ps1 -Query 'order'` (also works before setup). The `oms-data-model` skill uses these references for both agents. See [ERD maintenance](docs/erd-knowledge.md) for monthly updates and version mapping.
