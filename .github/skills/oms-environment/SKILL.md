@@ -9,7 +9,7 @@ For sample prompts and expected results, see [examples](examples.md) when reques
 
 1. Run `./scripts/get-environment.ps1 -Environment <name>`. Omit the name only to resolve the configured default, then retain the returned name for all steps.
 2. If unconfigured, have the user run `./scripts/init.ps1 -Environment <name>` interactively. For initial templates only use `-NonInteractive`. Setup supports additional environment names; dev and QA start disabled.
-3. Runtime settings and credentials live in `.local/`; examples in `config/` contain no secrets. Endpoint changes go in `environments.json`; secrets are under `<environment>.<service>` in `credentials.json` (`db2`, `orderhub`, `apiTester`, `rest`). Do not dump credential files into chat. REST and DB2 helpers read only the selected service internally.
+3. Runtime settings and credentials live in `.local/`; examples in `config/` contain no secrets. Endpoint changes go in `environments.json`; each environment has one shared `username` and `password` in `credentials.json`. REST may also use that environment's `token` or `headers`. Do not dump credential files into chat. REST and DB2 helpers read the selected environment internally.
 4. Reuse existing browser login. If login is required, use the browser tool's supported secret-file binding when available; otherwise ask the user to sign in. Do not claim tool calls hide plaintext passwords.
 
 Check setup with `./scripts/check-setup.ps1 -Environment <name> -Connect`. This checks dependencies and DB2 TCP reachability, not query permissions or browser login. For configuration details only, read [setup](../../../docs/setup.md).

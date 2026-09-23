@@ -35,7 +35,7 @@ Two thin, model-independent custom agents in `.github/agents/`: **OMS Operator**
 
 PowerShell scripts handle setup, configuration, DB2 invocation, and REST. A small Java 8-compatible JDBC helper is included as source and `tools/db2-client/oms-db2.jar`. Runtime users need Java for DB2, but no Python, Node.js, Maven, or compiler. Maintainers need JDK 9+ to rebuild. Windows PowerShell 5.1 and PowerShell 7 are tested.
 
-Credentials are intentionally simple plaintext JSON, split by environment and service in Git-ignored `.local/credentials.json`. Settings are separate in `.local/environments.json`. Blank templates are committed. Local is initially enabled; dev and QA are disabled placeholders; init supports additional named environments and preserves existing values on Enter. Never print/commit credential files or move actual passwords into this handoff.
+Credentials are intentionally simple plaintext JSON, with one shared username/password per environment in Git-ignored `.local/credentials.json`. REST token and custom headers are also stored at the environment level. Settings are separate in `.local/environments.json`. Blank templates are committed. Local is initially enabled; dev and QA are disabled placeholders; init supports additional named environments and preserves existing values on Enter. Never print/commit credential files or move actual passwords into this handoff.
 
 IBM's JDBC driver is NOT committed or distributed in the archive. Users provide their approved driver from DBeaver/IBM or configure its existing path. Java itself is not bundled. The local test copy of the IBM driver and credentials are available only in this working copy's ignored directories.
 

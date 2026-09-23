@@ -19,9 +19,7 @@ function Get-OmsCredential($Context, [string]$Service) {
     $all = Read-JsonFile (Join-Path $Context.ConfigDir 'credentials.json')
     $envProperty = $all.PSObject.Properties[$Context.Name]
     if (!$envProperty) { throw 'Missing credentials for selected environment.' }
-    $property = $envProperty.Value.PSObject.Properties[$Service]
-    if (!$property) { throw "Missing $Service credentials." }
-    $property.Value
+    $envProperty.Value
 }
 function Resolve-RepoPath([string]$Path) {
     if ([IO.Path]::IsPathRooted($Path)) { return $Path }

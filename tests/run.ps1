@@ -45,7 +45,7 @@ try {
     Expect-Failure { & "$repo/scripts/get-environment.ps1" -Environment '../local' -ConfigDir $temp } 'Invalid environment'
 
     $creds = Get-Content $credsPath -Raw | ConvertFrom-Json
-    $creds.local.db2.username = 'fixture'; $creds.local.db2.password = 'fixture-password'
+    $creds.local.username = 'fixture'; $creds.local.password = 'fixture-password'
     Save-Json $creds $credsPath
     $fakeJar = Join-Path $temp 'fake-driver.jar'
     & jar cf $fakeJar -C $temp OmsDb2Test.class -C $temp com
@@ -80,7 +80,7 @@ try {
     $cfg.environments.local.rest.baseUrl = "http://127.0.0.1:$port/api/"
     Save-Json $cfg $cfgPath
     $creds = Get-Content $credsPath -Raw | ConvertFrom-Json
-    $creds.local.rest.username = 'fixture'; $creds.local.rest.password = 'fixture-password'
+    $creds.local.username = 'fixture'; $creds.local.password = 'fixture-password'
     Save-Json $creds $credsPath
     $reqPath = Join-Path $temp 'request.json'
     $req = [ordered]@{ method = 'GET'; path = 'echo'; effect = 'read' }
@@ -110,13 +110,13 @@ try {
     $cfg.environments.qa.enabled = $true
     $cfg.environments.qa.rest.baseUrl = "http://127.0.0.1:$port/api/"
     $cfg.environments.qa.rest.auth = 'bearer'
-    $creds.qa.rest.token = 'qa-fixture-token'
+    $creds.qa.token = 'qa-fixture-token'
     Save-Json $cfg $cfgPath; Save-Json $creds $credsPath
     $req.path = 'echo'; Save-Json $req $reqPath
     $r = & "$repo/scripts/invoke-rest.ps1" -Environment qa -ConfigDir $temp -RequestFile $reqPath | ConvertFrom-Json
     Assert ($r.environment -eq 'qa' -and $r.body.Contains('Bearer [REDACTED]') -and !$r.body.Contains('qa-fixture-token')) 'QA uses its own bearer credentials'
     $cfg.environments.qa.rest.auth = 'headers'
-    $creds.qa.rest.headers | Add-Member -NotePropertyName 'Authorization' -NotePropertyValue 'Custom qa-fixture-token'
+    $creds.qa.headers | Add-Member -NotePropertyName 'Authorization' -NotePropertyValue 'Custom qa-fixture-token'
     Save-Json $cfg $cfgPath; Save-Json $creds $credsPath
     $r = & "$repo/scripts/invoke-rest.ps1" -Environment qa -ConfigDir $temp -RequestFile $reqPath | ConvertFrom-Json
     Assert ($r.body.Contains('[REDACTED]') -and !$r.body.Contains('qa-fixture-token')) 'Custom auth headers'

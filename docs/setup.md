@@ -8,7 +8,7 @@ Setup prompts do not echo passwords. Files are plaintext and local; protect them
 
 `environments.json`: defaultEnvironment, javaPath, driverPath, and named environments. Each has enabled, orderHubUrl, apiTesterUrl, rest.baseUrl/auth, and db2.host/port/database/schema/readOnlyAccountVerified. Java and driver paths may be absolute; relative driver paths resolve from the repo. Do not embed credentials in URLs. DB2 hosts currently support DNS/IPv4, not IPv6 literals or extra JDBC URL options.
 
-`credentials.json`: environment → service (`db2`, `orderhub`, `apiTester`, `rest`) → username/password. REST also supports token and custom headers. This keeps local/dev/QA credentials independent even if usernames happen to match. `./scripts/init.ps1 -Environment dev` configures dev; custom names work too. Disabled/missing environments fail without falling back to local. Switch the default in environments.json or always pass `-Environment` explicitly.
+`credentials.json`: environment → username/password. The same login is used by DB2, Order Hub, API Tester, and REST Basic authentication. REST also supports an environment-level token and custom headers. This keeps local/dev/QA credentials independent. `./scripts/init.ps1 -Environment dev` configures dev; custom names work too. Disabled/missing environments fail without falling back to local. Switch the default in environments.json or always pass `-Environment` explicitly.
 
 Use the actual host/port from DBeaver, including any tunnel it uses. A JAR does not expose a Docker port. In a normal published-port local Docker setup the host is localhost and the port is 50000.
 

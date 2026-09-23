@@ -36,21 +36,19 @@ $settings.db2.schema = Read-Setting 'DB2 schema' $settings.db2.schema
 Write-Host 'DB2 requires a SELECT-only account. An instance administrator is not read-only.'
 $answer = Read-Host 'Have its read-only database grants been verified? yes/no (Enter preserves setting)'
 if ($answer) { $settings.db2.readOnlyAccountVerified = ($answer -eq 'yes') }
-foreach ($service in @('db2','orderhub','apiTester','rest')) {
-    $credential = $creds.$Environment.$service
-    $credential.username = Read-Setting "$service username" $credential.username
-    $secret = Read-Host "$service password (Enter preserves setting)" -AsSecureString
-    $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret)
-    try { $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr); if ($plain) { $credential.password = $plain } }
-    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr); $plain = $null }
-}
+$credential = $creds.$Environment
+$credential.username = Read-Setting 'Environment username' $credential.username
+$secret = Read-Host 'Environment password (Enter preserves setting)' -AsSecureString
+$ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret)
+try { $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr); if ($plain) { $credential.password = $plain } }
+finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr); $plain = $null }
 if ($settings.rest.auth -eq 'bearer') {
     $secret = Read-Host 'REST bearer token (Enter preserves setting)' -AsSecureString
     $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret)
-    try { $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr); if ($plain) { $creds.$Environment.rest.token = $plain } }
+    try { $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr); if ($plain) { $credential.token = $plain } }
     finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr); $plain = $null }
 }
-if ($settings.rest.auth -eq 'headers') { Write-Host 'Set deployment-specific auth headers in this environment''s rest.headers credential object.' }
+if ($settings.rest.auth -eq 'headers') { Write-Host 'Set deployment-specific auth headers in this environment''s headers credential object.' }
 $settings.enabled = $true
 if ((Read-Host "Make $Environment the default? yes/no") -eq 'yes') { $config.defaultEnvironment = $Environment }
 $config | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath (Join-Path $ConfigDir 'environments.json') -Encoding UTF8
