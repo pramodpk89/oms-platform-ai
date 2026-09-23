@@ -21,3 +21,23 @@ Expected: identify the target, explain the action, obtain one confirmation, then
 > Find order ORDER-DOES-NOT-EXIST in local Order Hub.
 
 Expected: report no match after a focused search; do not invent a status.
+
+> Find inventory for SKU ABC-123 at node STORE-1 in local Order Hub. Show availability and UOM.
+
+Expected: use the inventory graph slice, select the enterprise and item/node scope, then return only displayed availability/UOM with identifiers. Do not confuse supply with availability or treat a dash as zero.
+
+> Find purchase order receipts for PO-100 in local Order Hub.
+
+Expected: use Orders > Inbound with the appropriate document type and receipt scope. Do not use the outbound sales-order search.
+
+> Show line statuses and assigned nodes for order 10001.
+
+Expected: distinguish line-level nodes/statuses from release-level assignments. Use the existing order details and relevant line/release view; report both explicitly if needed.
+
+> Find the latest integration exceptions for service TEST_SERVICE from yesterday.
+
+Expected: use Exceptions, service and an explicit Exception date range. Sorting only the loaded records does not establish the latest records globally. Do not reprocess anything.
+
+> How does Order Hub search by shipping node?
+
+Expected: retrieve a focused documentation excerpt and explain order/line/release search-level semantics with its IBM source. No OMS login is needed for this documentation question.

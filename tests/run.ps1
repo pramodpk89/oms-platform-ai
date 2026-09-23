@@ -19,6 +19,7 @@ try {
         Assert ($errors.Count -eq 0) "Parse $($file.Name)"
     }
     & "$PSScriptRoot/erd.ps1"
+    & "$PSScriptRoot/orderhub.ps1"
     & "$repo/scripts/build-db2.ps1"
     & javac --release 8 -encoding UTF-8 -cp "$repo/tools/db2-client/oms-db2.jar" -d $temp "$PSScriptRoot/OmsDb2Test.java" "$PSScriptRoot/MockServer.java" "$PSScriptRoot/DB2Driver.java"
     Assert ($LASTEXITCODE -eq 0) 'Compile fixtures'
