@@ -10,12 +10,13 @@ For live checks see [acceptance](acceptance.md). API names, schemas and UI contr
 
 ## Local verification — 2026-09-23
 
-- Mac, PowerShell 7.4.13, Java 21: 29 Java assertions and 71 PowerShell checks passed (100 total).
+- Mac, PowerShell 7.4.13, Java 21: 31 Java assertions and 71 PowerShell checks passed (102 total).
 - Java helper checks also passed under the locally installed Java 8 runtime.
 - Live DB2 connection probe passed: DB2 11.5.8 (`SQL110580`); no application SQL executed.
 - Both supplied OMS HTTPS endpoints responded to a connectivity check. The browser rejected their untrusted certificate; authenticated Order Hub and API Tester workflows remain untested.
 - A loopback mock API Tester passed browser selection, XML entry, invocation, result reading, and simulated cancellation. This does not validate Sterling UI controls, XML contracts, or Copilot confirmation behavior.
 - No live order was changed. Live SQL counts require a verified read-only account; REST needs a deployment endpoint/auth configuration.
-- Windows and VS Code Copilot/OpenAI/Claude acceptance runs remain pending. The CI workflow is provided but has not been run on a hosted runner.
+- Hosted CI passed the suite on Windows PowerShell 5.1, Windows PowerShell 7, and macOS PowerShell 7 with Java 17: [verified run](https://github.com/pramodpk89/oms-platform-ai/actions/runs/35826684457). Windows testing caught a UTF-8 preamble in the Java input stream; the fix has a regression test.
+- VS Code Copilot/OpenAI/Claude acceptance runs remain pending; helper execution on Windows is verified, model routing and browser integration are not.
 
 Context budget: the shared Copilot instruction file is 167 words; individual skills are 135–264 words. Runtime output is bounded. These are measured size limits, not an exact token-usage guarantee.
