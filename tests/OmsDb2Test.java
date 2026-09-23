@@ -61,6 +61,10 @@ public final class OmsDb2Test implements Driver {
     public boolean jdbcCompliant() { return false; }
     public java.util.logging.Logger getParentLogger() { return java.util.logging.Logger.getGlobal(); }
     public static void main(String[] args) throws Exception {
+        for (String preamble : Arrays.asList("", "\ufeff")) {
+            Properties input = OmsDb2.readInput(new java.io.ByteArrayInputStream((preamble + "host=bG9jYWxob3N0\n").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+            check("localhost".equals(input.getProperty("host")), "UTF-8 input with optional Windows BOM");
+        }
         for (String sql : Arrays.asList("SELECT * FROM T", "with x as (select * from t) select * from x", "-- comment\nSELECT 'DELETE; it''s fine', \"UPDATE\" FROM T", "/* a /* b */ c */ SELECT * FROM T")) check(OmsDb2.guard(sql).equals(sql), "Read query changed");
         for (String sql : Arrays.asList("DELETE FROM T", "SELECT * FROM T; DELETE FROM T", "SELECT * FROM FINAL TABLE (DELETE FROM T)", "WITH x AS (DELETE FROM T) SELECT * FROM x", "SELECT NEXT VALUE FOR S FROM T", "CALL X()", "SELECT * FROM T FOR UPDATE", "SELECT * INTO X FROM T", "SELECT 'unterminated", "SELECT * /* unclosed", "VALUES 1", "SELECT * FROM T;", "GRANT SELECT ON T TO X")) blocked(sql);
         check(OmsDb2.quote("a\"\n\\").equals("\"a\\\"\\u000a\\\\\""), "JSON escaping");

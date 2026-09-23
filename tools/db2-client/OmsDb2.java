@@ -143,11 +143,18 @@ public final class OmsDb2 {
             } finally { c.rollback(); }
         }
     }
+    static Properties readInput(InputStream stream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        // .NET Framework can emit a preamble when Process.StandardInput is initialized.
+        reader.mark(1); if (reader.read() != '\ufeff') reader.reset();
+        Properties encoded = new Properties(); encoded.load(reader);
+        Properties p = new Properties();
+        for (String key : encoded.stringPropertyNames()) p.setProperty(key, new String(Base64.getDecoder().decode(encoded.getProperty(key)), StandardCharsets.UTF_8));
+        return p;
+    }
     public static void main(String[] args) {
         try {
-            Properties encoded = new Properties(); encoded.load(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            Properties p = new Properties();
-            for (String key : encoded.stringPropertyNames()) p.setProperty(key, new String(Base64.getDecoder().decode(encoded.getProperty(key)), StandardCharsets.UTF_8));
+            Properties p = readInput(System.in);
             String result = run(p);
             // Do not echo credentials returned by a query or a driver.
             for (String key : Arrays.asList("password")) if (p.getProperty(key) != null && !p.getProperty(key).isEmpty()) result = result.replace(quote(p.getProperty(key)).substring(1, quote(p.getProperty(key)).length() - 1), "[REDACTED]");
