@@ -10,9 +10,28 @@ Expected: consult the documented contract and describe required identifiers, wit
 
 Expected: ask the user to provide input XML for `getOrderDetails` before invoking. Explain required identifiers from the documented contract if helpful, but do not generate and submit a payload from the order number.
 
-> <Order OrderHeaderKey="123"/> getOrderDetails
+## Worked example: getOrderDetails
 
-Expected: parse `getOrderDetails` as the API name and the preceding XML as the Message. Leave Is a Service? unchecked, select getOrderDetails in API Name, clear stale Service Name/template content, populate UserId and Password safely from the selected environment, validate the contract, and click Test API Now! once. Do not ask again for input already supplied. Summarize the result or OMS error.
+User input:
+
+```text
+<Order OrderHeaderKey="123"/> getOrderDetails
+```
+
+Fill the API Tester as follows:
+
+- **Is a Service?**: unchecked.
+- **API Name**: `getOrderDetails`.
+- **Service Name**: empty.
+- **UserId / Password**: the selected environment's configured credentials, entered using supported secret handling or by the user directly in the tester.
+- **Message**: `<Order OrderHeaderKey="123"/>`.
+- **Template**: empty for this example; clear any previous template.
+
+Validate the input against the installed contract, then click **Test API Now!** once. Inspect the actual response and summarize the returned order details or OMS error. Do not claim order `123` exists or invent a successful response. This is an illustrative identifier, not a recorded live test.
+
+If the user provides only `getOrderDetails`, ask: “Please provide the input XML for getOrderDetails, for example `<Order OrderHeaderKey="123"/>`, using your actual order header key.” Wait for their XML before submitting. If they already provided the complete input above, do not ask again.
+
+## Additional example prompts
 
 > Invoke getOrderDetails in local API Tester.
 
