@@ -1,6 +1,6 @@
 # API Tester example prompts
 
-Execution requires a configured API Tester URL, browser access, and deployment-compatible API contracts. Replace order numbers and supply required enterprise/document identifiers for your test environment.
+Execution requires a configured API Tester URL, browser access, credentials, a user-specified API or service name, and user-supplied input XML compatible with the installed contract. The identifier below is illustrative; use your test environment's identifiers.
 
 > Using the bundled API documentation, explain the input required by getOrderDetails. Do not invoke it.
 
@@ -8,11 +8,23 @@ Expected: consult the documented contract and describe required identifiers, wit
 
 > In local API Tester, look up order 10001 using getOrderDetails. Check the input contract first and ask for any required identifiers that are missing.
 
-Expected: prepare valid input from the documented contract, invoke through the browser, and summarize the response. Do not guess enterprise identifiers.
+Expected: ask the user to provide input XML for `getOrderDetails` before invoking. Explain required identifiers from the documented contract if helpful, but do not generate and submit a payload from the order number.
+
+> <Order OrderHeaderKey="123"/> getOrderDetails
+
+Expected: parse `getOrderDetails` as the API name and the preceding XML as the Message. Leave Is a Service? unchecked, select getOrderDetails in API Name, clear stale Service Name/template content, populate UserId and Password safely from the selected environment, validate the contract, and click Test API Now! once. Do not ask again for input already supplied. Summarize the result or OMS error.
+
+> Invoke getOrderDetails in local API Tester.
+
+Expected: ask for input XML and do not submit until it is provided.
+
+> Run this in local API Tester: <Order OrderHeaderKey="123"/>
+
+Expected: ask which API or configured service to invoke, and clarify its type if necessary. Retain the supplied XML; do not guess the operation from the Order element.
 
 > In local API Tester, invoke the documented read-only service using the XML I attach. Return only its result summary.
 
-Expected: verify the service's effect and contract, select the correct mode, and inspect both HTTP and application errors.
+Expected: ask for the exact service name because it was not supplied. Once the name and attached input XML are available, verify the service's effect and contract, check Is a Service?, fill Service Name, put the XML in Message, fill request credentials safely, and click Test API Now! once. Inspect both HTTP and application errors.
 
 > Prepare an API Tester request to cancel test order 10001, but do not submit it.
 
