@@ -1,0 +1,11 @@
+{
+  "fixPack": "supplied-2025-12-11-bundled",
+  "fileName": "xapidocs.zip",
+  "sha256": "58009c869cee74a024a6ff647713585779d62eb368c271f6be56992b9d41c780",
+  "parts": [
+    "xapidocs.zip.part001",
+    "xapidocs.zip.part002",
+    "xapidocs.zip.part003",
+    "xapidocs.zip.part004"
+  ]
+}

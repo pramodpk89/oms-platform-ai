@@ -5,6 +5,8 @@ description: Invoke Sterling OMS APIs or configured services through the browser
 
 Resolve [environment](../oms-environment/SKILL.md); open its `apiTesterUrl`. Reuse the authenticated session or follow the environment login procedure.
 
+The [bundled API documentation](../../../documentation/README.md) is available in `.local/docs/xapidocs.zip` after setup (or `scripts/prepare-docs.ps1 -ArchiveOnly`). Consult relevant API contracts there, checking deployment version/customizations before use.
+
 1. Determine the API or service, input, and expected effect from the user's request and the installed API documentation or an approved example. If unknown, inspect the available choices/docs or ask for the contract. Do not invent an API name, XML attribute, cancellation mechanism, or service behavior.
 2. Inspect the current tester UI. Select the correct API/service mode and name. Fill the input XML; set a narrow output template when supported. Clear stale inputs and templates that belong to a previous invocation. Keep authentication and request fields distinct.
 3. Validate XML and required identifiers. A “get” name alone is not proof that a custom service is read-only. For changes, confirm the environment, operation, target, and relevant payload once, immediately before invoking.

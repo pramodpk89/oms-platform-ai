@@ -12,6 +12,8 @@ For live checks see [acceptance](acceptance.md). API names, schemas and UI contr
 
 ## Local verification — 2026-09-23
 
+Bundled-documentation addition: built the Java helper and passed 43 ERD/bundle checks, 31 Java assertions, and 87 PowerShell checks before committing. The full suite now runs normal setup against the tracked real archive parts in a fresh temporary configuration directory. A separate fresh copy (excluding `.git` and `.local`) successfully ran `find-erd.ps1 -Table YFS_ORDER_HEADER` without setup, reconstructed the checksum-verified API ZIP, and imported 904 tables/16,861 columns. No network, existing knowledge cache, or external ZIP was used by that fresh-copy check.
+
 ERD refresh addition: 37 synthetic ERD checks, 31 Java assertions, and 81 PowerShell checks passed locally. The supplied ZIP imported 904 entity definitions with 16,861 columns; the `YFS_ORDER_HEADER` primary key and `OPPORTUNITY_KEY` logical relationship were checked against the source. The source's exact fix-pack identifier is unknown. Hosted Windows verification for this addition is tracked by its PR checks.
 
 - Mac, PowerShell 7.4.13, Java 21: 31 Java assertions and 71 PowerShell checks passed (102 total).

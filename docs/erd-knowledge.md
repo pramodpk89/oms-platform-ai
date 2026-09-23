@@ -1,6 +1,8 @@
 # ERD knowledge
 
-Import each IBM fix-pack documentation ZIP with Windows PowerShell 5.1 or PowerShell 7. No Python, browser, database, or additional packages are needed.
+The complete API-docs ZIP ships as [tracked archive parts](../documentation/README.md). Setup reconstructs the ZIP and imports the ERD automatically with Windows PowerShell 5.1 or PowerShell 7. First lookup also works without running setup. No Python, browser, database, Git LFS, or extra download is needed.
+
+The commands below are for maintainers importing a different fix pack; ordinary users only need lookup:
 
 ```powershell
 ./scripts/update-erd.ps1 -ZipPath 'C:\Downloads\xapidocs.zip' -FixPack 'your-fix-pack'
@@ -12,7 +14,7 @@ Use the actual fix-pack identifier supplied with the ZIP. The importer records y
 
 ## Storage and refresh
 
-Generated knowledge lives in Git-ignored `.local/erd/`. The public repository carries the importer, skill, and synthetic tests; each team member imports their authorized IBM documentation ZIP. Raw vendor documentation and generated descriptions are not uploaded by the scripts. `-KnowledgeRoot <directory>` on both commands supports an alternative local store.
+Generated knowledge lives in Git-ignored `.local/erd/`; the reconstructed original archive is `.local/docs/xapidocs.zip`. The source archive parts are committed in `documentation/bundle/`. `-KnowledgeRoot <directory>` on the import/lookup commands supports an alternative local store; custom stores require explicit import.
 
 Each immutable `versions/<fix-pack>/` snapshot contains:
 

@@ -109,6 +109,21 @@ try {
     try { Fails { & "$repo/scripts/update-erd.ps1" -ZipPath $third -FixPack fp5 -KnowledgeRoot $root } 'concurrent import rejected' } finally { $lock.Dispose() }
     $null = & "$repo/scripts/update-erd.ps1" -ZipPath $first -FixPack fp1 -KnowledgeRoot $root
     Check ((Read-ErdJson (Join-Path $root 'current.json')).fixPack -eq 'fp4') 'older reimport does not switch current'
+    $bundle = Join-Path $temp 'bundle'
+    $null = & "$repo/scripts/package-docs.ps1" -ZipPath $first -FixPack fp1 -OutputDir $bundle -PartBytes 128
+    $bundleManifest = Read-ErdJson (Join-Path $bundle 'manifest.json')
+    Check ($bundleManifest.parts.Count -gt 1) 'split archive fixture'
+    $data = Join-Path $temp 'fresh data'
+    $prepared = & "$repo/scripts/prepare-docs.ps1" -DataDir $data -BundleDir $bundle | ConvertFrom-Json
+    Check ((Get-FileHash -LiteralPath $prepared.archive).Hash -eq (Get-FileHash -LiteralPath $first).Hash) 'reconstructed archive matches original'
+    Check ((Read-ErdJson (Join-Path $data 'erd/current.json')).fixPack -eq 'fp1') 'bundle imports ERD automatically'
+    $preparedAgain = & "$repo/scripts/prepare-docs.ps1" -DataDir $data -BundleDir $bundle | ConvertFrom-Json
+    Check ($preparedAgain.archive -eq $prepared.archive) 'bundle preparation is repeatable'
+    [IO.File]::WriteAllText($prepared.archive, 'corrupt local cache')
+    $null = & "$repo/scripts/prepare-docs.ps1" -DataDir $data -BundleDir $bundle
+    Check ((Get-FileHash -LiteralPath $prepared.archive).Hash -eq (Get-FileHash -LiteralPath $first).Hash) 'damaged cache rebuilt automatically'
+    [IO.File]::WriteAllText((Join-Path $bundle $bundleManifest.parts[0]), 'corrupt source part')
+    Fails { & "$repo/scripts/prepare-docs.ps1" -DataDir (Join-Path $temp 'bad data') -BundleDir $bundle } 'corrupt source parts rejected'
     Write-Output "ERD checks passed: $script:erdChecks"
 } finally {
     if ($temp -and (Split-Path -Leaf $temp) -match '^oms-erd-[a-f0-9]{32}$') { Remove-Item -LiteralPath $temp -Recurse -Force }

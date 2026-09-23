@@ -26,6 +26,10 @@ try {
     Assert ($LASTEXITCODE -eq 0) 'JDBC and SQL tests'
 
     $null = & "$repo/scripts/init.ps1" -NonInteractive -ConfigDir $temp
+    Assert (Test-Path -LiteralPath (Join-Path $temp 'docs/xapidocs.zip')) 'Fresh setup reconstructs bundled API ZIP'
+    $erdManifest = Get-Content (Join-Path $temp 'erd/current.json') -Raw | ConvertFrom-Json
+    $snapshot = Get-Content (Join-Path $temp "erd/versions/$($erdManifest.fixPack)/manifest.json") -Raw | ConvertFrom-Json
+    Assert ($snapshot.tableCount -gt 0 -and $snapshot.columnCount -gt 0) 'Fresh setup imports bundled ERD'
     $cfgPath = Join-Path $temp 'environments.json'
     $credsPath = Join-Path $temp 'credentials.json'
     $cfg = Get-Content $cfgPath -Raw | ConvertFrom-Json

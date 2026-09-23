@@ -1,4 +1,4 @@
-param([string]$Environment = 'local', [switch]$NonInteractive, [string]$ConfigDir)
+param([string]$Environment = 'local', [switch]$NonInteractive, [string]$ConfigDir, [string]$BundleDir = (Join-Path $PSScriptRoot '../documentation/bundle'))
 . "$PSScriptRoot/shared/Common.ps1"
 if ($Environment -notmatch '^[a-z][a-z0-9-]*$') { throw 'Invalid environment name.' }
 if (!$ConfigDir) { $ConfigDir = Join-Path $script:RepoRoot '.local' }
@@ -7,7 +7,8 @@ foreach ($file in @('environments','credentials')) {
     $target = Join-Path $ConfigDir "$file.json"
     if (!(Test-Path -LiteralPath $target)) { Copy-Item -LiteralPath (Join-Path $script:RepoRoot "config/$file.example.json") -Destination $target }
 }
-if ($NonInteractive) { Write-JsonResult @{ status = 'templates-ready'; configDir = $ConfigDir }; return }
+$documentation = & "$PSScriptRoot/prepare-docs.ps1" -DataDir $ConfigDir -BundleDir $BundleDir | ConvertFrom-Json
+if ($NonInteractive) { Write-JsonResult @{ status = 'templates-ready'; configDir = $ConfigDir; documentation = $documentation }; return }
 $config = Read-JsonFile (Join-Path $ConfigDir 'environments.json')
 $creds = Read-JsonFile (Join-Path $ConfigDir 'credentials.json')
 if (!$config.environments.PSObject.Properties[$Environment]) {

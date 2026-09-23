@@ -15,7 +15,7 @@ Try “Check order 10001 in local Order Hub”, “Count orders created today in
 
 ## Extend and share
 
-Import monthly ERD knowledge with `./scripts/update-erd.ps1 -ZipPath <file.zip> -FixPack <version>`. Search it with `./scripts/find-erd.ps1 -Query 'order'`. The `oms-data-model` skill uses this versioned reference for both agents. See [ERD maintenance](docs/erd-knowledge.md) for environment mapping and change reports. Generated vendor knowledge stays local.
+The [complete API-docs ZIP](documentation/README.md) is bundled in this repository. Setup automatically reconstructs it and imports the ERD; no separate download or import is needed. Search with `./scripts/find-erd.ps1 -Query 'order'` (also works before setup). The `oms-data-model` skill uses these references for both agents. See [ERD maintenance](docs/erd-knowledge.md) for monthly updates and version mapping.
 
 Start with [building a skill](docs/building-a-skill.md) and [sample-orders-today](.github/skills/sample-orders-today/SKILL.md). **OMS Skill Builder** can help author new skills. Keep this repo open in the workspace when using its skills; they do not automatically become available in unrelated repos. Teams may install/copy the foundations through their normal shared-skill process, preserving referenced helpers.
 

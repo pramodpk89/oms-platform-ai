@@ -4,7 +4,7 @@ Updated 2026-09-23. Read this file first; inspect other files only as needed for
 
 ## ERD refresh addition
 
-Monthly fix-pack ERD import is implemented in `scripts/update-erd.ps1`; lookup is `scripts/find-erd.ps1`. Both agents use the new `oms-data-model` foundation. See `docs/erd-knowledge.md`. Generated vendor metadata stays in Git-ignored `.local/erd/`, with immutable versions, a current pointer, and HTML/JSON change reports. Import your authorized ZIP in each checkout; source metadata is not bundled in the public repo.
+Monthly fix-pack ERD import is implemented in `scripts/update-erd.ps1`; lookup is `scripts/find-erd.ps1`. Both agents use `oms-data-model`. See `docs/erd-knowledge.md`. At the user's explicit request the full API-docs ZIP is tracked in `documentation/bundle/` as split parts; setup or first lookup reconstructs it automatically and imports the ERD. `scripts/package-docs.ps1` builds monthly bundles; `scripts/prepare-docs.ps1` prepares them offline. Generated metadata stays in `.local/erd/` with retained versions and change reports.
 
 The supplied ZIP imported 904 tables and 16,861 columns. Its exact fix-pack ID is unknown; local labels beginning `supplied-2025-12-11` are provisional. An environment's optional `erdFixPack` setting selects matching documentation. No live DB connection is needed for lookup.
 

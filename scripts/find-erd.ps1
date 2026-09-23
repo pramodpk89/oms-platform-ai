@@ -9,6 +9,9 @@ param(
 )
 . "$PSScriptRoot/shared/Erd.ps1"
 $root = Get-ErdRoot $KnowledgeRoot
+if (!$KnowledgeRoot -and !(Test-Path -LiteralPath (Join-Path $root 'current.json'))) {
+    $null = & "$PSScriptRoot/prepare-docs.ps1"
+}
 if ($Environment) {
     . "$PSScriptRoot/shared/Common.ps1"
     $context = Get-OmsContext $Environment $ConfigDir
