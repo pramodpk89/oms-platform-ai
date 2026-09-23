@@ -1,0 +1,38 @@
+# ============================================================
+# Sterling OMS — User Exit Spec Template
+# ============================================================
+# Instructions for Tech Leads:
+#   1. Copy this template into the Jira ticket description
+#   2. Fill in the fields below
+#   3. Keep logic in plain English, one step per line
+#   4. Supply the target SDK/API documentation or its location.
+#      Verify signatures and XML contracts before implementation.
+# ============================================================
+
+type: UE
+interface:               # e.g. YFSBeforeCreateOrderUE, YFSBeforeChangeOrderUE
+class_name:              # e.g. BeforeCreateOrderUEImpl (follows your naming convention)
+package: com.mycompany.ue
+
+what: |
+  # One-liner: what does this UE do?
+
+logic: |
+  # Plain English steps. One per line.
+  # Example:
+  # 1. Check Order.OrderType
+  # 2. If OrderType is RETURN, default ShipNode to enterprise default
+  # 3. Call getOrganizationList to look up default node
+
+# --- Optional sections (only if needed) ---
+
+# api_calls:             # Only if the UE calls other Sterling APIs internally
+#   - changeOrder
+#   - getOrderList
+
+# error:                 # Only if specific error handling is needed
+#   code: ERR_CUSTOM_CODE
+#   message: Something went wrong
+
+# notes: |
+#   Any extra context for the developer

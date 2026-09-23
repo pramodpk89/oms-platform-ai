@@ -2,6 +2,8 @@
 
 Use the relevant skill in `.github/skills/`; load only the references needed for the request. Resolve the environment once and pass it explicitly to each helper. Default order investigations to Order Hub unless the user requests another surface.
 
+For Sterling Java coding or definitions, use `oms-sterling-code`. Coding knowledge needs no environment connection; inspect the target project and SDK before implementation.
+
 DB2 is strictly read-only. Use `scripts/invoke-db2.ps1`; never bypass its checks or use an administrator to work around permissions. Confirm environment, operation, and target once before an API or UI write. A timeout is an unknown outcome, not permission to retry a write.
 
 Credentials live in Git-ignored `.local/credentials.json`. Do not print the file, put passwords in commands, commit secrets, or include them in reports. Browser tools may expose entered credentials to model/tool history; reuse an authenticated session or let the user sign in when needed.

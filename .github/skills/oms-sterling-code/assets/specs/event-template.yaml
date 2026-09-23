@@ -1,0 +1,35 @@
+# ============================================================
+# Sterling OMS — Event Handler Spec Template
+# ============================================================
+# Instructions for Tech Leads:
+#   1. Copy this template into the Jira ticket description
+#   2. Fill in the fields below
+#   3. No interface to implement — just a plain Java class
+#   4. The AI knows your conventions (YFCLogCategory,
+#      beginTimer/endTimer, YFSException pattern)
+# ============================================================
+
+type: Event
+event_name:              # e.g. SCHEDULE_ORDER.ON_BACKORDER, CREATE_ORDER.ON_SUCCESS
+class_name:              # e.g. CancelOrderLineOnBackorderImpl
+package: com.mycompany.event
+method_name:             # e.g. cancelOrderOnBackorder (entry point method)
+
+what: |
+  # One-liner: what does this event handler do?
+
+logic: |
+  # Plain English steps. One per line.
+  # Example:
+  # 1. Read OrderHeaderKey from input
+  # 2. Loop through OrderLines
+  # 3. If LineType is BOPIS or DFS, add to cancel list
+  # 4. Return changeOrder input XML with Action=CANCEL on matched lines
+
+# --- Optional sections (only if needed) ---
+
+# output_api:            # Which API the output document feeds into
+#   name: changeOrder
+
+# notes: |
+#   Any extra context for the developer

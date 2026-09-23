@@ -1,0 +1,22 @@
+# Sterling OMS — Custom API Spec
+# Jira: STER-1236
+
+type: CustomAPI
+api_name: getCustomerOrderHistory
+class_name: GetCustomerOrderHistoryImpl
+package: com.mycompany.customapi
+
+what: Fetch order history for a customer with shipment details
+
+input: |
+  <Order EnterpriseCode="" CustomerEmailID="" FromOrderDate="" ToOrderDate="" />
+
+output: |
+  <OrderList> with Order, OrderLines, and Shipment details per line
+
+logic: |
+  1. Validate EnterpriseCode and CustomerEmailID are not empty
+  2. Call getOrderList filtered by email and date range
+  3. For each order, call getShipmentListForOrder
+  4. Merge shipment data into order lines
+  5. Return enriched OrderList

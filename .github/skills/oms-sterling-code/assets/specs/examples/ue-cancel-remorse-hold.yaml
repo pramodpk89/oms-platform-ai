@@ -1,0 +1,16 @@
+# Sterling OMS — User Exit Spec
+# Jira: STER-1234
+
+type: UE
+interface: YFSBeforeCreateOrderUE
+class_name: CancelRemorseHoldUEImpl
+package: com.mycompany.ue
+
+what: Cancel order if remorse hold not removed after 30 mins
+
+logic: |
+  1. Get Order.CreateTs from input document
+  2. Get current time
+  3. If time difference > 30 minutes AND order has active REMORSE_HOLD
+  4. Then call changeOrder API with Action=CANCEL
+  5. Else pass through unchanged

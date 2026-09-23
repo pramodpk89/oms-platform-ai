@@ -4,6 +4,8 @@ Use `sample-orders-today` as a working example. It contains one short SKILL.md a
 
 For data-model knowledge, use `oms-data-model` and its fix-pack-specific references. Do not embed a copy of the full ERD or duplicate table definitions in new skills. See [ERD maintenance](erd-knowledge.md).
 
+For Sterling Java customization knowledge, reuse [oms-sterling-code](../.github/skills/oms-sterling-code/SKILL.md). Its references and spec templates describe UEs, events, custom APIs, utilities, and tests; target SDK contracts take precedence. See [migration scope](sterling-coding-knowledge.md).
+
 1. Define the capability and one realistic user request. Decide whether it is platform access or a business workflow using existing access skills.
 2. Create `.github/skills/<lowercase-hyphen-name>/SKILL.md`. Include YAML `name` matching the folder and a specific `description` explaining when it applies. Avoid descriptions like “all OMS tasks”.
 3. Explain required inputs, the action, expected output, and material failure cases. Link the foundations instead of copying connection/authentication logic. Keep optional contracts/examples in linked references, loaded only when needed.
