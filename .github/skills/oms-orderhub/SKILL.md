@@ -5,6 +5,8 @@ description: Use the Sterling Order Hub browser interface for requested searches
 
 Resolve [environment](../oms-environment/SKILL.md); open its `orderHubUrl` using the available browser tool. Reuse the matching tab and authenticated session. Use the environment skill's login procedure if needed.
 
+For sample prompts and expected results, see [examples](examples.md) when requested.
+
 For direct order lookups, use the shortest path:
 
 1. Open the local Order Hub login page and authenticate with the selected environment credentials. If the local deployment uses a self-signed certificate, accept the browser exception or use the project’s insecure browser workflow rather than guessing at credentials.

@@ -5,6 +5,8 @@ description: Invoke Sterling OMS APIs or configured services through the browser
 
 Resolve [environment](../oms-environment/SKILL.md); open its `apiTesterUrl`. Reuse the authenticated session or follow the environment login procedure.
 
+For sample prompts and expected results, see [examples](examples.md) when requested.
+
 The [bundled API documentation](../../../documentation/README.md) is available in `.local/docs/xapidocs.zip` after setup (or `scripts/prepare-docs.ps1 -ArchiveOnly`). Consult relevant API contracts there, checking deployment version/customizations before use.
 
 1. Determine the API or service, input, and expected effect from the user's request and the installed API documentation or an approved example. If unknown, inspect the available choices/docs or ask for the contract. Do not invent an API name, XML attribute, cancellation mechanism, or service behavior.

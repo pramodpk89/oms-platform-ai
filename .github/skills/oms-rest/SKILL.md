@@ -5,6 +5,8 @@ description: Call configured Sterling OMS REST endpoints with documented methods
 
 Resolve [environment](../oms-environment/SKILL.md). Obtain the endpoint and authentication convention from this deployment's documentation or user input; do not derive them from Order Hub's port or URL.
 
+For sample prompts and expected results, see [examples](examples.md) when requested.
+
 Consult the [bundled API documentation](../../../documentation/README.md) for API contracts. Setup prepares `.local/docs/xapidocs.zip`; `scripts/prepare-docs.ps1 -ArchiveOnly` also reconstructs it. The archive does not establish deployment-specific REST routes or authentication.
 
 1. Create a request descriptor in `.local/request.json` using [request format](references/request-format.md). Paths are relative to the configured REST base. Store payloads beside the descriptor. Keep credentials in the environment's credential entry, not the descriptor or shell arguments.
