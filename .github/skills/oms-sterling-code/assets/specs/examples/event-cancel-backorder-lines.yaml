@@ -1,0 +1,20 @@
+# Sterling OMS — Event Handler Spec
+# Jira: STER-1235
+
+type: Event
+event_name: SCHEDULE_ORDER.ON_BACKORDER
+class_name: CancelOrderLineOnBackorderImpl
+package: com.mycompany.event
+method_name: cancelOrderOnBackorder
+
+what: Cancel backordered BOPIS and DFS order lines
+
+logic: |
+  1. Get OrderHeaderKey from input document
+  2. Loop through OrderLines
+  3. If LineType is BOPIS or DFS, mark line for cancellation
+  4. Build changeOrder input XML with Action=CANCEL on matched lines
+  5. Return the output document
+
+output_api:
+  name: changeOrder

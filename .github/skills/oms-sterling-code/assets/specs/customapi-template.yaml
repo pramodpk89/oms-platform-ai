@@ -1,0 +1,42 @@
+# ============================================================
+# Sterling OMS — Custom API Spec Template
+# ============================================================
+# Instructions for Tech Leads:
+#   1. Copy this template into the Jira ticket description
+#   2. Fill in the fields below
+#   3. Class must implement YIFCustomApi
+#   4. Confirm the configured method; these examples use invoke.
+# ============================================================
+
+type: CustomAPI
+api_name:                # e.g. getCustomerOrderHistory (verify registration in the target configuration)
+class_name:              # e.g. GetCustomerOrderHistoryImpl
+package: com.mycompany.customapi
+
+what: |
+  # One-liner: what does this API do?
+
+input: |
+  # What the caller passes in. Keep it brief.
+  # e.g. <Order EnterpriseCode="" CustomerPONo="" />
+
+output: |
+  # What the API returns. Keep it brief.
+  # e.g. <OrderList> with matched orders and line details
+
+logic: |
+  # Plain English steps. One per line.
+  # Example:
+  # 1. Validate EnterpriseCode is not empty
+  # 2. Call getOrderList with CustomerPONo filter
+  # 3. Enrich response with shipment details
+  # 4. Return combined output
+
+# --- Optional sections (only if needed) ---
+
+# api_calls:             # Sterling APIs called internally
+#   - getOrderList
+#   - getShipmentDetails
+
+# notes: |
+#   Any extra context for the developer

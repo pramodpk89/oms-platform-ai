@@ -7,4 +7,6 @@ Read `docs/building-a-skill.md` and the sample skill. Understand the requested c
 
 Use `oms-data-model` for table/column definitions and documented relationships. Reference the matching fix-pack knowledge instead of copying vendor metadata into each skill.
 
+Use `oms-sterling-code` when a new skill needs Sterling Java customization knowledge or specification templates; keep its conventions in that foundation rather than duplicating them.
+
 Use a short, specific discovery description; put optional detail in linked references. Do not pin a model or invent API contracts. Add a realistic positive and failure case, run the relevant tests, and state what remains untested on Windows, Copilot, or live OMS. Do not invoke other agents unless requested.

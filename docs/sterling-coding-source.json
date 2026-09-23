@@ -1,0 +1,82 @@
+{
+  "repository": "https://github.com/oms-forge/sterling-codebase",
+  "commit": "dded930439c8973add8cbbef3918428cc867b654",
+  "files": [
+    {
+      "source": ".sterling-ai/conventions/customapi.md",
+      "sourceSha256": "d9ce8f2bc4de2cc3e79d09bdb9afc4cbbd1882e7d058967140afb97c1457e581",
+      "destination": ".github/skills/oms-sterling-code/references/customapi.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/conventions/event.md",
+      "sourceSha256": "76c18016f3c9a29557ca2afbb820b44500ee787ce6d2ddceba6b3a9f7a4967b7",
+      "destination": ".github/skills/oms-sterling-code/references/event.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/conventions/extensions-db.md",
+      "sourceSha256": "a515e77af8b8825493905efebbb7dac338a255d77be26bf87c7ac547ad3ed0a9",
+      "destination": ".github/skills/oms-sterling-code/references/extensions-db.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/conventions/junit-tests.md",
+      "sourceSha256": "f8a6a2ce6ce21fcbc1c0f8eb7b8c39a6fc2aa27e3a69532a47e99696e01208af",
+      "destination": ".github/skills/oms-sterling-code/references/junit-tests.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/conventions/ue.md",
+      "sourceSha256": "75cbc2d6b3dc662fe6428020682c0bcd980e41ab7dc656f986bbc28f5f657437",
+      "destination": ".github/skills/oms-sterling-code/references/ue.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/conventions/utility-classes.md",
+      "sourceSha256": "dacf8f54ec54961293c49b263a4858e953f6a758cdc0e7c5dc6c9ffff4fe7b8c",
+      "destination": ".github/skills/oms-sterling-code/references/utility-classes.md",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/specs/customapi-template.yaml",
+      "sourceSha256": "c113a3e75d7459d30c4d644512ce72f0d21ef074c9e36df28c00229e4f333ce2",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/customapi-template.yaml",
+      "adapted": true
+    },
+    {
+      "source": ".sterling-ai/specs/event-template.yaml",
+      "sourceSha256": "51615cb0b68af50ac3b4f1aa80944b6c8182a718e6acbe24774f1b2d5c650045",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/event-template.yaml",
+      "adapted": false
+    },
+    {
+      "source": ".sterling-ai/specs/examples/customapi-get-customer-order-history.yaml",
+      "sourceSha256": "942ba13aa2426881b1a3975ecd41d03a862adb29c6454eee02d9f04686a2c5f7",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/examples/customapi-get-customer-order-history.yaml",
+      "adapted": false
+    },
+    {
+      "source": ".sterling-ai/specs/examples/event-cancel-backorder-lines.yaml",
+      "sourceSha256": "58cc76d5f0e8e44d3efe9a12e2f2a68b00a86f0ee23bb5f87f5e63da08300621",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/examples/event-cancel-backorder-lines.yaml",
+      "adapted": false
+    },
+    {
+      "source": ".sterling-ai/specs/examples/ue-cancel-remorse-hold.yaml",
+      "sourceSha256": "3a78ef39f660c60e0320a8466ac8c08dc6bfacdf97bb644ecfc9c960af21d65a",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/examples/ue-cancel-remorse-hold.yaml",
+      "adapted": false
+    },
+    {
+      "source": ".sterling-ai/specs/ue-template.yaml",
+      "sourceSha256": "bdd53f3a90650200b29d7a82bc0cb33e9a3b086f204cc828767bca2c35156080",
+      "destination": ".github/skills/oms-sterling-code/assets/specs/ue-template.yaml",
+      "adapted": true
+    }
+  ],
+  "excluded": [
+    ".sterling-ai/conventions/attribute-resolution.md",
+    ".sterling-ai/conventions/ootb-attributes.md"
+  ]
+}
