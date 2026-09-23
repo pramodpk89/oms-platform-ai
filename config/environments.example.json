@@ -1,0 +1,16 @@
+{
+  "defaultEnvironment": "local",
+  "javaPath": "java",
+  "driverPath": "dependencies/db2jcc4.jar",
+  "environments": {
+    "local": {
+      "enabled": true,
+      "orderHubUrl": "https://localhost:7443/order-management/",
+      "apiTesterUrl": "https://localhost:9443/smcfs/yfshttpapi/ibmapitester.jsp",
+      "rest": { "baseUrl": "", "auth": "basic" },
+      "db2": { "host": "localhost", "port": 50000, "database": "OMDB", "schema": "OMDB", "readOnlyAccountVerified": false }
+    },
+    "dev": { "enabled": false, "orderHubUrl": "", "apiTesterUrl": "", "rest": { "baseUrl": "", "auth": "basic" }, "db2": { "host": "", "port": 50000, "database": "", "schema": "", "readOnlyAccountVerified": false } },
+    "qa": { "enabled": false, "orderHubUrl": "", "apiTesterUrl": "", "rest": { "baseUrl": "", "auth": "basic" }, "db2": { "host": "", "port": 50000, "database": "", "schema": "", "readOnlyAccountVerified": false } }
+  }
+}

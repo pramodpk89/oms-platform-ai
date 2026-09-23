@@ -1,0 +1,21 @@
+name: Test toolkit
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  portable:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: PowerShell 7 tests
+        shell: pwsh
+        run: ./tests/run.ps1
+      - name: Windows PowerShell 5.1 tests
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: ./tests/run.ps1
